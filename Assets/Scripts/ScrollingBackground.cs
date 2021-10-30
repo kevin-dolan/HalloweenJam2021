@@ -21,10 +21,10 @@ public class ScrollingBackground : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        bg1.transform.position -= Vector3.right * scrollSpeed;
-        bg2.transform.position -= Vector3.right * scrollSpeed;
+        bg1.transform.position -= Vector3.right * scrollSpeed * Time.deltaTime;
+        bg2.transform.position -= Vector3.right * scrollSpeed * Time.deltaTime;
 
-        if(bg1.transform.position.x < -31.0f) { bg1.transform.position = resetPosition; }
-        if(bg2.transform.position.x < -31.0f) { bg2.transform.position = resetPosition; }
+        if(bg1.transform.position.x < -30.0f) { bg1.transform.position = resetPosition; }
+        if(bg2.transform.position.x < -30.0f) { bg2.transform.position = resetPosition; }
     }
 }
