@@ -373,6 +373,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemyPrefab: {fileID: 423004644104283739, guid: 1c4bd1e2a90495f47be4f446cb019ba5, type: 3}
+  eGroups:
+  - {fileID: 11400000, guid: 02e1ca694e6459e4094802341b056930, type: 2}
+  - {fileID: 11400000, guid: 839ced9253264ae42895c5150e2a313f, type: 2}
 --- !u!4 &1712599942
 Transform:
   m_ObjectHideFlags: 0
@@ -457,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 423004644104283719, guid: 1c4bd1e2a90495f47be4f446cb019ba5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.36
       objectReference: {fileID: 0}
     - target: {fileID: 423004644104283719, guid: 1c4bd1e2a90495f47be4f446cb019ba5, type: 3}
       propertyPath: m_LocalPosition.y
