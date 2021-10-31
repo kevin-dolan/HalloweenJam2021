@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    private Canvas canvas;
 
     [SerializeField] private GameObject enemyPrefab; //MUST BE SET IN INSPECTOR
     [SerializeField] private List<EnemyGroup> eGroupsList = new List<EnemyGroup>(); //list of groups of enemies to spawn in the level this EnemyManager is currently in.
     [SerializeField] private Queue<EnemyGroup> eGroups = new Queue<EnemyGroup>(); //QUEUE of groups of enemies
 
-    private float spawnDelayCounter = 3.0f; //used to delay between spawns of enemy groups in FixedUpdate()
-
+    private float spawnDelayCounter = 3.0f; //used to delay between spawns of enemy groups in FixedUpdate
     private Vector3 spawnPosition; //used while instantiating enemies. manipulated to spawn enemies in patterns.
-
     private EnemyGroup enemyGroupHolder;
     private GameObject enemyHolder;
 
     // Start is called before the first frame update
     void Start()
     {
+        canvas = FindObjectOfType<Canvas>(); //get reference to canvas
+
         foreach(EnemyGroup group in eGroupsList) //at the start of the scene, add all the enemy groups from eGroupsList to the queue eGroups.
         {
             eGroups.Enqueue(group);
@@ -39,7 +40,7 @@ public class EnemyManager : MonoBehaviour
             if(eGroups.Count <= 0) //if eGroups is empty, just do nothing FOR NOW
             {
                 Debug.Log("No more groups to spawn!");
-                spawnDelayCounter = 999.0f;
+                canvas.transform.GetChild(1).gameObject.SetActive(true); //set the Panel Sacrifice to active
                 return;
             }
 

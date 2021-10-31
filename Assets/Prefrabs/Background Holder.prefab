@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollSpeed: 1
   resetThreshhold: -30
-  resetPosition: {x: 36, y: 0, z: 0}
+  resetPosition: {x: 36, y: 0, z: 1}
 --- !u!1 &299665622656340783
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299665622656340783}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 299665621970958216}
@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299665623447854981}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 36, y: 0, z: 0}
+  m_LocalPosition: {x: 36, y: 0, z: 1}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 299665621970958216}
