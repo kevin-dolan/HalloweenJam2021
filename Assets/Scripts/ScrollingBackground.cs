@@ -8,8 +8,8 @@ public class ScrollingBackground : MonoBehaviour
     private GameObject bg2;
 
     [SerializeField] private float scrollSpeed = 0.05f; //speed at which the background scrolls to the left
-
-    private Vector3 resetPosition = new Vector3(32.0f, -0.5f, 0.0f);
+    [SerializeField] private float resetThreshhold = -30.0f;
+    [SerializeField] private Vector3 resetPosition = new Vector3(32.0f, 0.0f, 0.0f);
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class ScrollingBackground : MonoBehaviour
         bg1.transform.position -= Vector3.right * scrollSpeed * Time.deltaTime;
         bg2.transform.position -= Vector3.right * scrollSpeed * Time.deltaTime;
 
-        if(bg1.transform.position.x < -30.0f) { bg1.transform.position = resetPosition; }
-        if(bg2.transform.position.x < -30.0f) { bg2.transform.position = resetPosition; }
+        if(bg1.transform.position.x < resetThreshhold) { bg1.transform.position = resetPosition; }
+        if(bg2.transform.position.x < resetThreshhold) { bg2.transform.position = resetPosition; }
     }
 }
