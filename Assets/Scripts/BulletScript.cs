@@ -4,9 +4,35 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 10.0f;
+    [SerializeField] private float bulletSpeed = 10.0f;
+    public float bulletSize;
+
     public int dmg = 1;
 
+    public float BulletSpeed
+    {
+        get
+        {
+            return bulletSpeed;
+        }
+        set
+        {
+            bulletSpeed = value;
+        }
+    }
+    public float BulletSize
+    {
+        get
+        {
+            return bulletSize;
+        }
+        set
+        {
+            bulletSize = value;
+        }
+    }
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,12 +42,12 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.right * speed * Time.deltaTime;
+        transform.position += Vector3.right * bulletSpeed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             //damage enemy
             //collision.getComponent<EnemyBehavior().TakeDamage(dmg);

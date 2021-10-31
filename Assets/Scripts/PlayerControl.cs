@@ -1,22 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
     [SerializeField] private float bulletCoolDown;
-    //[SerializeField] private float bulletSpeed;
     [SerializeField] private int damage;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private int bulletNumber;
     [SerializeField] private float invincibilityCoolDOwn;
+    [SerializeField] private Sprite heart1;
+    [SerializeField] private Sprite heart2;
+    [SerializeField] private Sprite heart3;
+    [SerializeField] private Sprite heart4;
+
+    private Vector3 v3zero = Vector3.zero;
     private float cooldownCounter;
+    private float damageCooldownCounter;
     [SerializeField] private int playerHealth;
     private GameObject playerObject;
+    private Canvas canvas;
+
+    public float PlayerSpeed
+    {
+        get
+        {
+            return playerSpeed;
+        }
+        set
+        {
+            playerSpeed = value;
+        }
+    }
+
+    public float BulletCoolDown
+    {
+        get
+        {
+            return bulletCoolDown;
+        }
+        set
+        {
+            bulletCoolDown = value;
+        }
+    }
+    
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+    
+
+    public int PlayerHealth
+    {
+        get
+        {
+            return playerHealth;
+        }
+        set
+        {
+            playerHealth = value;
+        }
+    }
+    public int BulletNumber
+    {
+        get
+        {
+            return bulletNumber;
+        }
+        set
+        {
+            bulletNumber = value;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //playerSpeed = gameObject.GetComponent<>
+        canvas = FindObjectOfType<Canvas>();
     }
 
     // Update is called once per frame
@@ -38,22 +108,6 @@ public class PlayerControl : MonoBehaviour
             transform.position = playerPosition;
         }
 
-        //if the player presses W or Up key
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            Vector3 playerPosition = transform.position;
-            playerPosition.x += playerSpeed;
-            transform.position = playerPosition;
-        }
-
-        //if the player presses A or Left key
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            Vector3 playerPosition = transform.position;
-            playerPosition.x -= playerSpeed;
-            transform.position = playerPosition;
-        }
-
         //cooling down based on real time
         if (cooldownCounter > 0)
         {
@@ -68,50 +122,117 @@ public class PlayerControl : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("Shoot");
-            Shoot();
+            for(int i = 0; i < bulletNumber; i++)
+            {
+                Debug.Log("Shoot");
+                Shoot();
+            }
+            
             cooldownCounter = bulletCoolDown;
         }
 
-        //takeDamage();
+        if (damageCooldownCounter > 0)
+        {
+            damageCooldownCounter -= Time.deltaTime;
+        }
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //cooling down based on real time
-        if (cooldownCounter > 0)
-        {
-            cooldownCounter -= Time.deltaTime;
+        
 
-        }
-
-        if (collision.gameObject.tag == "enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
             Debug.Log(playerHealth);
-            if (cooldownCounter > 0)
+            if (damageCooldownCounter > 0)
             {
                 Debug.Log("im not hurt");
                 return;
             }
             else
             {
-                Debug.Log("im hurt");
+                Debug.Log("im hurt");          
                 playerHealth -= 1;
+                damageCooldownCounter = invincibilityCoolDOwn;
             }
-            cooldownCounter = invincibilityCoolDOwn;
+            
             //game over when the player's health is 0
             if (playerHealth == 0)
             {
                 Debug.Log("You died.");
+                //game over code
+                SceneManager.LoadScene("GameOver");
             }
+
+            if(playerHealth == 4)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart1;
+            }
+            else if(playerHealth == 3)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 2)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 1)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 0)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+
+             
         }
     }
 
     void Shoot()
     {
         GameObject bulletClone = Instantiate(bullet, transform.position, transform.rotation);
+        bulletClone.transform.localScale = Vector3.one * bulletClone.GetComponent<BulletScript>().bulletSize;
         bulletClone.GetComponent<BulletScript>().dmg = damage;
+    }   
+
+    void TakeFoot()
+    {
+        playerSpeed -= 0.02f;
+        damage += 3;
     }
-        
+
+    void TakeEye()
+    {
+        bulletCoolDown = 0.3f;
+    }
+
+    void TakeHand()
+    {
+        playerHealth += 1;
+        bulletCoolDown = 1;
+    }
+
+    void TakeHeart()
+    {
+        playerHealth = 1;
+        bulletCoolDown = 0.05f;
+    }
 }
