@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
@@ -9,10 +11,16 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private int bulletNumber;
     [SerializeField] private float invincibilityCoolDOwn;
+    [SerializeField] private Sprite heart1;
+    [SerializeField] private Sprite heart2;
+    [SerializeField] private Sprite heart3;
+    [SerializeField] private Sprite heart4;
+
     private float cooldownCounter;
     private float damageCooldownCounter;
     [SerializeField] private int playerHealth;
     private GameObject playerObject;
+    private Canvas canvas;
 
     public float PlayerSpeed
     {
@@ -77,7 +85,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        canvas = FindObjectOfType<Canvas>();
     }
 
     // Update is called once per frame
@@ -122,18 +130,17 @@ public class PlayerControl : MonoBehaviour
             cooldownCounter = bulletCoolDown;
         }
 
-        //takeDamage();
+        if (damageCooldownCounter > 0)
+        {
+            damageCooldownCounter -= Time.deltaTime;
+        }
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //cooling down based on real time
-        if (damageCooldownCounter > 0)
-        {
-            damageCooldownCounter -= Time.deltaTime;
-
-        }
+        
 
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
@@ -145,16 +152,56 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("im hurt");
-                Shoot();
+                Debug.Log("im hurt");          
                 playerHealth -= 1;
+                damageCooldownCounter = invincibilityCoolDOwn;
             }
-            damageCooldownCounter = invincibilityCoolDOwn;
+            
             //game over when the player's health is 0
             if (playerHealth == 0)
             {
                 Debug.Log("You died.");
+                //game over code
+                SceneManager.LoadScene(0);
             }
+
+            if(playerHealth == 4)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart1;
+            }
+            else if(playerHealth == 3)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 2)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 1)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart1;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+            else if (playerHealth == 0)
+            {
+                canvas.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = heart2;
+                canvas.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>().sprite = heart2;
+            }
+
+             
         }
     }
 
@@ -163,6 +210,15 @@ public class PlayerControl : MonoBehaviour
         GameObject bulletClone = Instantiate(bullet, transform.position, transform.rotation);
         bulletClone.transform.localScale = Vector3.one * bulletClone.GetComponent<BulletScript>().bulletSize;
         bulletClone.GetComponent<BulletScript>().dmg = damage;
+    }   
+
+    void TakeFoot()
+    {
+
     }
-        
+
+    void TakeEye()
+    {
+
+    }
 }
