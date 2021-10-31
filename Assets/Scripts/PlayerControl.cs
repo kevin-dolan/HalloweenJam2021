@@ -5,19 +5,79 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
     [SerializeField] private float bulletCoolDown;
-    //[SerializeField] private float bulletSpeed;
     [SerializeField] private int damage;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private int bulletNumber;
     [SerializeField] private float invincibilityCoolDOwn;
     private float cooldownCounter;
     private float damageCooldownCounter;
     [SerializeField] private int playerHealth;
     private GameObject playerObject;
 
+    public float PlayerSpeed
+    {
+        get
+        {
+            return playerSpeed;
+        }
+        set
+        {
+            playerSpeed = value;
+        }
+    }
+
+    public float BulletCoolDown
+    {
+        get
+        {
+            return bulletCoolDown;
+        }
+        set
+        {
+            bulletCoolDown = value;
+        }
+    }
+    
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+    
+
+    public int PlayerHealth
+    {
+        get
+        {
+            return playerHealth;
+        }
+        set
+        {
+            playerHealth = value;
+        }
+    }
+    public int BulletNumber
+    {
+        get
+        {
+            return bulletNumber;
+        }
+        set
+        {
+            bulletNumber = value;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        //playerSpeed = gameObject.GetComponent<>
+
     }
 
     // Update is called once per frame
@@ -39,22 +99,6 @@ public class PlayerControl : MonoBehaviour
             transform.position = playerPosition;
         }
 
-        ////if the player presses W or Up key
-        //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    Vector3 playerPosition = transform.position;
-        //    playerPosition.x += playerSpeed;
-        //    transform.position = playerPosition;
-        //}
-
-        ////if the player presses A or Left key
-        //if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        //{
-        //    Vector3 playerPosition = transform.position;
-        //    playerPosition.x -= playerSpeed;
-        //    transform.position = playerPosition;
-        //}
-
         //cooling down based on real time
         if (cooldownCounter > 0)
         {
@@ -69,8 +113,12 @@ public class PlayerControl : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("Shoot");
-            Shoot();
+            for(int i = 0; i < bulletNumber; i++)
+            {
+                Debug.Log("Shoot");
+                Shoot();
+            }
+            
             cooldownCounter = bulletCoolDown;
         }
 
@@ -113,6 +161,7 @@ public class PlayerControl : MonoBehaviour
     void Shoot()
     {
         GameObject bulletClone = Instantiate(bullet, transform.position, transform.rotation);
+        bulletClone.transform.localScale = Vector3.one * bulletClone.GetComponent<BulletScript>().bulletSize;
         bulletClone.GetComponent<BulletScript>().dmg = damage;
     }
         
