@@ -16,6 +16,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Sprite heart3;
     [SerializeField] private Sprite heart4;
 
+    private Vector3 v3zero = Vector3.zero;
     private float cooldownCounter;
     private float damageCooldownCounter;
     [SerializeField] private int playerHealth;
@@ -214,11 +215,24 @@ public class PlayerControl : MonoBehaviour
 
     void TakeFoot()
     {
-
+        playerSpeed -= 0.02f;
+        damage += 3;
     }
 
     void TakeEye()
     {
+        bulletCoolDown = 0.3f;
+    }
 
+    void TakeHand()
+    {
+        playerHealth += 1;
+        bulletCoolDown = 1;
+    }
+
+    void TakeHeart()
+    {
+        playerHealth = 1;
+        bulletCoolDown = 0.05f;
     }
 }
