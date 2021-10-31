@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private float invincibilityCoolDOwn;
     private float cooldownCounter;
+    private float damageCooldownCounter;
     [SerializeField] private int playerHealth;
     private GameObject playerObject;
 
@@ -38,21 +39,21 @@ public class PlayerControl : MonoBehaviour
             transform.position = playerPosition;
         }
 
-        //if the player presses W or Up key
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            Vector3 playerPosition = transform.position;
-            playerPosition.x += playerSpeed;
-            transform.position = playerPosition;
-        }
+        ////if the player presses W or Up key
+        //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    Vector3 playerPosition = transform.position;
+        //    playerPosition.x += playerSpeed;
+        //    transform.position = playerPosition;
+        //}
 
-        //if the player presses A or Left key
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            Vector3 playerPosition = transform.position;
-            playerPosition.x -= playerSpeed;
-            transform.position = playerPosition;
-        }
+        ////if the player presses A or Left key
+        //if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    Vector3 playerPosition = transform.position;
+        //    playerPosition.x -= playerSpeed;
+        //    transform.position = playerPosition;
+        //}
 
         //cooling down based on real time
         if (cooldownCounter > 0)
@@ -80,16 +81,16 @@ public class PlayerControl : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //cooling down based on real time
-        if (cooldownCounter > 0)
+        if (damageCooldownCounter > 0)
         {
-            cooldownCounter -= Time.deltaTime;
+            damageCooldownCounter -= Time.deltaTime;
 
         }
 
-        if (collision.gameObject.tag == "enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
             Debug.Log(playerHealth);
-            if (cooldownCounter > 0)
+            if (damageCooldownCounter > 0)
             {
                 Debug.Log("im not hurt");
                 return;
@@ -97,9 +98,10 @@ public class PlayerControl : MonoBehaviour
             else
             {
                 Debug.Log("im hurt");
+                Shoot();
                 playerHealth -= 1;
             }
-            cooldownCounter = invincibilityCoolDOwn;
+            damageCooldownCounter = invincibilityCoolDOwn;
             //game over when the player's health is 0
             if (playerHealth == 0)
             {
