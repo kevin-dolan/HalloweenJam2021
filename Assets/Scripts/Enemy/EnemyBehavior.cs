@@ -142,9 +142,10 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "player")
+        if(collision.gameObject.tag == "Player")
         {
             Debug.Log("Enemy hit a player!");
+            Destroy(this.gameObject);
             //collision.gameObject.GetComponent<PlayerControl>().TakeDamage();
         }
     }

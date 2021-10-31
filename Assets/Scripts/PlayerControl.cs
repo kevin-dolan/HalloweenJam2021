@@ -163,7 +163,7 @@ public class PlayerControl : MonoBehaviour
             {
                 Debug.Log("You died.");
                 //game over code
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene("GameOver");
             }
 
             if(playerHealth == 4)

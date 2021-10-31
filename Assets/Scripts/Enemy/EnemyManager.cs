@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     private Canvas canvas;
 
+    [SerializeField] private SceneManagerScript sceneManger;
     [SerializeField] private GameObject enemyPrefab; //MUST BE SET IN INSPECTOR
     [SerializeField] private List<EnemyGroup> eGroupsList = new List<EnemyGroup>(); //list of groups of enemies to spawn in the level this EnemyManager is currently in.
     [SerializeField] private Queue<EnemyGroup> eGroups = new Queue<EnemyGroup>(); //QUEUE of groups of enemies
@@ -40,7 +41,7 @@ public class EnemyManager : MonoBehaviour
             if(eGroups.Count <= 0) //if eGroups is empty, just do nothing FOR NOW
             {
                 Debug.Log("No more groups to spawn!");
-                canvas.transform.GetChild(1).gameObject.SetActive(true); //set the Panel Sacrifice to active
+                sceneManger.ChangeLevel("MainMenu");
                 return;
             }
 
