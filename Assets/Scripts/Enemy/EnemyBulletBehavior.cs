@@ -13,7 +13,7 @@ public class EnemyBulletBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         //transform.position += Vector3.left * speed * Time.deltaTime; //old way of moving left

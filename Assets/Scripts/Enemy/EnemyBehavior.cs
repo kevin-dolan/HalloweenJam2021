@@ -12,7 +12,7 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private MovePattern movePattern;
     [SerializeField] private ShootPattern shootPattern;
-    [SerializeField] private float bulletCooldown;
+    [SerializeField] private float shootCooldown;
 
     private float incrementMove = 0.0f; //used in movement logic (Zigzag, Stutter)
     private float bulletCounter = 0.0f;
@@ -22,13 +22,13 @@ public class EnemyBehavior : MonoBehaviour
     private Quaternion fireQuaternion;
 
     //psuedo-constructor
-    public void SetBehavior(int h = 1, float s = 1.1f, MovePattern mp = MovePattern.Straight, ShootPattern sp = ShootPattern.None, float bc = 2.0f)
+    public void SetBehavior(int h = 1, float s = 1.1f, MovePattern mp = MovePattern.Straight, ShootPattern sp = ShootPattern.None, float sc = 2.0f)
     {
         health = h;
         moveSpeed = s;
         movePattern = mp;
         shootPattern = sp;
-        bulletCooldown = bc;
+        shootCooldown = sc;
     }
 
     // Start is called before the first frame update
@@ -102,7 +102,7 @@ public class EnemyBehavior : MonoBehaviour
                     break;
             }
 
-            bulletCounter = bulletCooldown; //after firing, reset bulletCounter.
+            bulletCounter = shootCooldown; //after firing, reset bulletCounter.
         }
 
         bulletCounter -= Time.deltaTime;
